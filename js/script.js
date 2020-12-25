@@ -88,6 +88,8 @@ let randomNumber = 0;
 let currentQuestion = {};
 let correctAnswer;
 let points;
+let selectedAnswer;
+let rbs;
 
 const questionBox = document.getElementById('questionBox');
 const submitButton = document.getElementById('submitButton');
@@ -99,7 +101,7 @@ const labelB = document.getElementById('labelB');
 const labelC = document.getElementById('labelC');
 const labelD = document.getElementById('labelD');
 const startNewGame = document.getElementById('startNewGame');
-const rbs = document.querySelectorAll('input[name="answer"]');
+
 
 startNewGame.addEventListener("click", startQuiz);
 submitButton.addEventListener("click", checkCorrectAnswer);
@@ -119,7 +121,6 @@ function startQuiz (){
 function loadQuiz() {
     randomNumber = Math.floor(Math.random() * currentGameQuestions.length);
     currentQuestion = currentGameQuestions[randomNumber];
-    console.log(currentQuestion);
     correctAnswer = currentQuestion['correct']; //Galima selectinti per skliaustus
     questionBox.innerText = currentQuestion.question; //Arba per taska
     currentGameQuestions.splice(randomNumber, 1);
@@ -131,16 +132,30 @@ function loadQuiz() {
 }
 
 function checkCorrectAnswer() {
-    let selectedAnswer;
+
+    selectedAnswer = undefined;
+    rbs = document.querySelectorAll('input[name="answer"]');
 
     for (const rb of rbs) {
         if (rb.checked) {
             selectedAnswer = rb.id;
             rb.checked = false;
-            break;
+            checkPoints();
         }
     }
 
+    selectedAnswer === undefined ? alert("Pasirinkite teisingą atsakymo variantą") : null;
+
+    //or
+    // rbs.forEach((answer) =>{
+    //    if (answer.checked) {
+    //        selectedAnswer = answer.id;
+    //        answer.checked = false;
+    //    }
+    // });
+}
+
+function checkPoints () {
     selectedAnswer === currentQuestion['correct'] ? points++ : null;
 
     if (currentGameQuestions.length === 0){
@@ -150,7 +165,7 @@ function checkCorrectAnswer() {
     } else {
         loadQuiz();
     }
-}
+};
 
 //FLORIN VARIANTAS
 
