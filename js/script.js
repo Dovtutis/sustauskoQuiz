@@ -110,9 +110,9 @@ function startQuiz (){
     points = 0;
     currentGameQuestions = [];
     currentGameQuestions = quizData.slice();
-    console.log(currentGameQuestions);
     quizContainer.style.display = 'block';
     resultsDiv.style.display = 'none';
+
     loadQuiz();
 }
 
@@ -142,7 +142,6 @@ function checkCorrectAnswer() {
     }
 
     selectedAnswer === currentQuestion['correct'] ? points++ : null;
-    console.log(points);
 
     if (currentGameQuestions.length === 0){
         quizContainer.style.display = 'none';
